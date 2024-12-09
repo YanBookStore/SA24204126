@@ -30,3 +30,5 @@ Suggests:
     microbenchmark,
     pracma
 VignetteBuilder: knitr
+URL: http://github.com/username/R-package
+BugReports: http://github.com/username/R-package/issues
