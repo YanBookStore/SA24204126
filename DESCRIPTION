@@ -1,0 +1,32 @@
+Package: SA24204126
+Type: Package
+Title: Bayesian Linear Regression with MCMC
+Version: 1.0
+Author: YanBookStore
+Maintainer: YanBookStore <2420253242@qq.com>
+Description: This package provides functions for simulating data and 
+    performing Bayesian linear regression via MCMC.
+License: GPL-3
+Imports:
+    Rcpp,
+    ggplot2,
+    MASS,
+    boot,
+    survival,
+    moments,
+    coin,
+    bootstrap,
+    coda
+LinkingTo: Rcpp
+RoxygenNote: 7.3.2
+NeedsCompilation: yes
+Encoding: UTF-8
+Suggests:
+    rmarkdown,
+    knitr,
+    DAAG,
+    gsl,
+    lpSolve,
+    microbenchmark,
+    pracma
+VignetteBuilder: knitr
