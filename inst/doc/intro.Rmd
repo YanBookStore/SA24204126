@@ -1,0 +1,239 @@
+---
+title: "Intro"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{intro}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+```{r}
+# 在构建 Vignette 时的默认设置
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width=7, fig.height=5
+)
+```
+
+# 简介
+
+`SA24204126` 包提供了一个简洁而灵活的框架，用于对线性回归模型进行**贝叶斯分析**。主要功能包括：
+
+- `simulate_data()`：从给定线性回归模型模拟数据（包括设计矩阵和响应变量）。
+```{r,eval=FALSE}
+simulate_data <- function(n=100, beta=c(1,2), sigma=1) {
+  p <- length(beta)
+  X <- cbind(1, matrix(rnorm((p-1)*n), n, p-1))
+  y <- X %*% beta + rnorm(n, 0, sigma)
+  list(X = X, y = c(y), true_beta = beta, sigma = sigma)
+}
+```
+
+- `mcmc_linreg()`：使用 Metropolis-Hastings 算法从后验分布中抽取回归系数的 MCMC 样本。
+```{r,eval=FALSE}
+NumericMatrix mcmc_linreg(const NumericVector &y,
+                           const NumericMatrix &X,
+                           const NumericVector &beta_init,
+                           double sigma2,
+                           double tau2,
+                           int n_iter,
+                           double proposal_sd) {
+   
+   int n = y.size();
+   int p = X.ncol();
+   
+   NumericMatrix beta_samples(n_iter, p);
+   NumericVector beta_current = clone(beta_init);
+   
+   auto log_posterior = [&](const NumericVector &beta) {
+     NumericVector y_hat(n);
+     for (int i = 0; i < n; i++) {
+       double tmp = 0.0;
+       for (int j = 0; j < p; j++) {
+         tmp += X(i,j)*beta[j];
+       }
+       y_hat[i] = tmp;
+     }
+     
+     double rss = 0.0;
+     for (int i = 0; i < n; i++) {
+       double diff = y[i] - y_hat[i];
+       rss += diff*diff;
+     }
+     double logLik = -0.5*n*std::log(2*M_PI*sigma2) - 0.5*(rss/sigma2);
+     
+     double beta_norm2 = 0.0;
+     for (int j = 0; j < p; j++) {
+       beta_norm2 += beta[j]*beta[j];
+     }
+     double logPrior = -0.5*p*std::log(2*M_PI*tau2) - 0.5*(beta_norm2/tau2);
+     
+     return logLik + logPrior;
+   };
+   
+   double log_post_current = log_posterior(beta_current);
+   
+   for (int iter = 0; iter < n_iter; iter++) {
+     NumericVector beta_proposal(p);
+     for (int j = 0; j < p; j++) {
+       beta_proposal[j] = R::rnorm(beta_current[j], proposal_sd);
+     }
+     
+     double log_post_proposal = log_posterior(beta_proposal);
+     double log_accept_ratio = log_post_proposal - log_post_current;
+     
+     if (std::log(R::runif(0,1)) < log_accept_ratio) {
+       beta_current = beta_proposal;
+       log_post_current = log_post_proposal;
+     }
+     
+     for (int j = 0; j < p; j++) {
+       beta_samples(iter, j) = beta_current[j];
+     }
+   }
+   
+   return beta_samples;
+ }
+```
+
+- `summarize_posterior()`：对后验样本进行汇总，计算后验均值和相应的信用区间（Credible Interval）。
+```{r,eval=FALSE}
+summarize_posterior <- function(y, X, beta_init, sigma2, tau2, n_iter, proposal_sd, cred_mass=0.95) {
+  # Perform MCMC sampling
+  beta_samples <- mcmc_linreg(y, X, beta_init, sigma2, tau2, n_iter, proposal_sd)
+  
+  # Summarize posterior samples
+  p <- ncol(beta_samples)
+  summary_list <- vector("list", p)
+  for (j in 1:p) {
+    mean_val <- mean(beta_samples[,j])
+    ci <- quantile(beta_samples[,j], probs = c((1-cred_mass)/2, 1-(1-cred_mass)/2))
+    summary_list[[j]] <- list(mean=mean_val, CI=ci)
+  }
+  summary_list
+}
+```
+
+## 原理概述
+
+考虑线性回归模型：  
+\[
+y = X\beta + \varepsilon,\quad \varepsilon \sim N(0, \sigma^2 I).
+\]
+
+在贝叶斯设定下，我们对参数 \(\beta\) 指定正态先验：  
+\[
+\beta \sim N(0, \tau^2 I).
+\]
+
+由此得到的后验分布满足：  
+\[
+p(\beta | y, X) \propto p(y|X,\beta) p(\beta).
+\]
+
+- 似然为：  
+  \[
+  p(y | X,\beta) = (2\pi\sigma^2)^{-\frac{n}{2}} \exp\left(-\frac{(y - X\beta)^\top(y - X\beta)}{2\sigma^2}\right).
+  \]
+
+- 先验为：  
+  \[
+  p(\beta) = (2\pi\tau^2)^{-\frac{p}{2}} \exp\left(-\frac{\beta^\top\beta}{2\tau^2}\right).
+  \]
+
+由于后验分布的显式形式在大多数情况下较为复杂，`mcmc_linreg()` 使用 M-H 算法对后验进行抽样，从而对 \(\beta\) 的后验特征进行评估。
+
+## 使用示例
+
+下面的示例展示如何使用 `SA24204126` 包来完成如下步骤：
+
+1. 使用 `simulate_data()` 模拟线性回归数据。
+2. 使用 `mcmc_linreg()` 对后验分布进行 MCMC 抽样。
+3. 使用 `summarize_posterior()` 对后验样本进行汇总和分析。
+```{r}
+library(SA24204126)
+```
+
+```{r}
+# 示例代码（eval=TRUE以实际执行并展示结果）
+if (!requireNamespace("SA24204126", quietly = TRUE)) {
+  stop("Package 'SA24204126' is required but is not installed. Please install it first.")
+}
+library(SA24204126)
+
+# 设置随机种子以便结果可重复
+set.seed(123)
+
+# 使用 simulate_data() 生成模拟数据
+data_sim <- simulate_data(n=200, beta=c(1,2), sigma=1)
+X <- data_sim$X
+y <- data_sim$y
+
+# 设置 MCMC 参数
+n_iter <- 5000
+sigma2 <- data_sim$sigma^2
+tau2 <- 10      # 先验方差
+beta_init <- rep(0, ncol(X))
+proposal_sd <- 0.1
+
+# 使用 mcmc_linreg() 抽取后验样本并 summarize_posterior() 进行结果汇总
+res_summary <- summarize_posterior(y, X, beta_init, sigma2, tau2, n_iter, proposal_sd)
+res_summary
+```
+
+上述代码运行完成后，`res_summary` 会返回每个系数的后验均值以及相应的 95% 可信区间。假定真实参数为 \(\beta = (1,2)\)，则估计应接近该值。
+
+### 汇总结果表格展示
+
+假设 `res_summary` 结果类似下面的结构（这里为示例）：
+
+```{r}
+# 从res_summary中提取信息
+mean_val <- res_summary[[1]]$mean
+ci_lower <- res_summary[[1]]$CI[1]
+ci_upper <- res_summary[[1]]$CI[2]
+
+# 创建数据框
+res_df <- data.frame(
+  Parameter = "Beta_1",
+  Mean = mean_val,
+  CI_Lower = ci_lower,
+  CI_Upper = ci_upper
+)
+
+# 使用knitr::kable展示表格
+knitr::kable(res_df, caption = "后验结果汇总表")
+```
+
+### 后验分布可视化
+
+下面示例演示如何从 `mcmc_linreg()` 获得的样本中绘制直方图，并用红色虚线标识真实参数值。要进行此操作，我们需要从底层访问 MCMC 样本。由于 `summarize_posterior()` 内部使用了 `mcmc_linreg()`，我们可以单独调用 `mcmc_linreg()` 来获取原始样本。
+
+```{r}
+# 获取后验样本矩阵（n_iter x p）
+beta_samples <- mcmc_linreg(y, X, beta_init, sigma2, tau2, n_iter, proposal_sd)
+
+par(mfrow=c(1,2))
+hist(beta_samples[,1], main="Posterior of Beta_1", xlab="Value", 
+     col="lightblue", border="white", freq=FALSE)
+abline(v=1, col="red", lwd=2, lty=2)  # 真值1
+
+hist(beta_samples[,2], main="Posterior of Beta_2", xlab="Value", 
+     col="lightblue", border="white", freq=FALSE)
+abline(v=2, col="red", lwd=2, lty=2)  # 真值2
+```
+
+通过图形可观察到后验分布围绕真实参数值（1 和 2）波动，并呈现较小的偏差。随着 MCMC 迭代数的增加，后验分布估计会更加稳定和精确。
+
+## 小结
+
+本 Vignette 演示了如何使用 `SA24204126` 包对线性回归模型进行贝叶斯分析的基本流程：
+
+- 使用 `simulate_data()` 生成数据。
+- 使用 `mcmc_linreg()` 获得参数的后验抽样。
+- 使用 `summarize_posterior()` 对后验结果进行汇总和分析。
+
+通过这些步骤，用户可以轻松获得参数的后验分布特征，包括后验均值、可信区间和直方图可视化，从而更好地理解和应用贝叶斯线性回归模型。

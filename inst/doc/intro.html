@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Intro</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Intro</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># 在构建 Vignette 时的默认设置</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="at">collapse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">&quot;#&gt;&quot;</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>  <span class="at">fig.width=</span><span class="dv">7</span>, <span class="at">fig.height=</span><span class="dv">5</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>)</span></code></pre></div>
+<div id="简介" class="section level1">
+<h1>简介</h1>
+<p><code>SA24204126</code>
+包提供了一个简洁而灵活的框架，用于对线性回归模型进行<strong>贝叶斯分析</strong>。主要功能包括：</p>
+<ul>
+<li><code>simulate_data()</code>：从给定线性回归模型模拟数据（包括设计矩阵和响应变量）。</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>simulate_data <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">beta=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">sigma=</span><span class="dv">1</span>) {</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">length</span>(beta)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, <span class="fu">matrix</span>(<span class="fu">rnorm</span>((p<span class="dv">-1</span>)<span class="sc">*</span>n), n, p<span class="dv">-1</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  y <span class="ot">&lt;-</span> X <span class="sc">%*%</span> beta <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, sigma)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">X =</span> X, <span class="at">y =</span> <span class="fu">c</span>(y), <span class="at">true_beta =</span> beta, <span class="at">sigma =</span> sigma)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li><code>mcmc_linreg()</code>：使用 Metropolis-Hastings
+算法从后验分布中抽取回归系数的 MCMC 样本。</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>NumericMatrix <span class="fu">mcmc_linreg</span>(const NumericVector <span class="sc">&amp;</span>y,</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>                           const NumericMatrix <span class="sc">&amp;</span>X,</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>                           const NumericVector <span class="sc">&amp;</span>beta_init,</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>                           double sigma2,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>                           double tau2,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>                           int n_iter,</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>                           double proposal_sd) {</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>   </span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>   int n <span class="ot">=</span> <span class="fu">y.size</span>();</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>   int p <span class="ot">=</span> <span class="fu">X.ncol</span>();</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>   </span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>   NumericMatrix <span class="fu">beta_samples</span>(n_iter, p);</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>   NumericVector beta_current <span class="ot">=</span> <span class="fu">clone</span>(beta_init);</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>   </span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>   auto log_posterior <span class="ot">=</span> [<span class="sc">&amp;</span>](const NumericVector <span class="sc">&amp;</span>beta) {</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>     NumericVector <span class="fu">y_hat</span>(n);</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>     <span class="cf">for</span> (int <span class="at">i =</span> <span class="dv">0</span>; i <span class="sc">&lt;</span> n; i<span class="sc">++</span>) {</span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>       double tmp <span class="ot">=</span> <span class="fl">0.0</span>;</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>       <span class="cf">for</span> (int <span class="at">j =</span> <span class="dv">0</span>; j <span class="sc">&lt;</span> p; j<span class="sc">++</span>) {</span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a>         tmp <span class="sc">+</span><span class="er">=</span> <span class="fu">X</span>(i,j)<span class="sc">*</span>beta[j];</span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>       }</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>       y_hat[i] <span class="ot">=</span> tmp;</span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>     }</span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>     </span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>     double rss <span class="ot">=</span> <span class="fl">0.0</span>;</span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>     <span class="cf">for</span> (int <span class="at">i =</span> <span class="dv">0</span>; i <span class="sc">&lt;</span> n; i<span class="sc">++</span>) {</span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>       double diff <span class="ot">=</span> y[i] <span class="sc">-</span> y_hat[i];</span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>       rss <span class="sc">+</span><span class="er">=</span> diff<span class="sc">*</span>diff;</span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>     }</span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>     double logLik <span class="ot">=</span> <span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>n<span class="sc">*</span>std<span class="sc">::</span><span class="fu">log</span>(<span class="dv">2</span><span class="sc">*</span>M_PI<span class="sc">*</span>sigma2) <span class="sc">-</span> <span class="fl">0.5</span><span class="sc">*</span>(rss<span class="sc">/</span>sigma2);</span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>     </span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>     double beta_norm2 <span class="ot">=</span> <span class="fl">0.0</span>;</span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>     <span class="cf">for</span> (int <span class="at">j =</span> <span class="dv">0</span>; j <span class="sc">&lt;</span> p; j<span class="sc">++</span>) {</span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>       beta_norm2 <span class="sc">+</span><span class="er">=</span> beta[j]<span class="sc">*</span>beta[j];</span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a>     }</span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>     double logPrior <span class="ot">=</span> <span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>p<span class="sc">*</span>std<span class="sc">::</span><span class="fu">log</span>(<span class="dv">2</span><span class="sc">*</span>M_PI<span class="sc">*</span>tau2) <span class="sc">-</span> <span class="fl">0.5</span><span class="sc">*</span>(beta_norm2<span class="sc">/</span>tau2);</span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a>     </span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a>     return logLik <span class="sc">+</span> logPrior;</span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>   };</span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>   </span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>   double log_post_current <span class="ot">=</span> <span class="fu">log_posterior</span>(beta_current);</span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>   </span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a>   <span class="cf">for</span> (int <span class="at">iter =</span> <span class="dv">0</span>; iter <span class="sc">&lt;</span> n_iter; iter<span class="sc">++</span>) {</span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a>     NumericVector <span class="fu">beta_proposal</span>(p);</span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a>     <span class="cf">for</span> (int <span class="at">j =</span> <span class="dv">0</span>; j <span class="sc">&lt;</span> p; j<span class="sc">++</span>) {</span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a>       beta_proposal[j] <span class="ot">=</span> R<span class="sc">::</span><span class="fu">rnorm</span>(beta_current[j], proposal_sd);</span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a>     }</span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a>     </span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a>     double log_post_proposal <span class="ot">=</span> <span class="fu">log_posterior</span>(beta_proposal);</span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a>     double log_accept_ratio <span class="ot">=</span> log_post_proposal <span class="sc">-</span> log_post_current;</span>
+<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a>     </span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a>     <span class="cf">if</span> (std<span class="sc">::</span><span class="fu">log</span>(R<span class="sc">::</span><span class="fu">runif</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">&lt;</span> log_accept_ratio) {</span>
+<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a>       beta_current <span class="ot">=</span> beta_proposal;</span>
+<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a>       log_post_current <span class="ot">=</span> log_post_proposal;</span>
+<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a>     }</span>
+<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a>     </span>
+<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a>     <span class="cf">for</span> (int <span class="at">j =</span> <span class="dv">0</span>; j <span class="sc">&lt;</span> p; j<span class="sc">++</span>) {</span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a>       <span class="fu">beta_samples</span>(iter, j) <span class="ot">=</span> beta_current[j];</span>
+<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a>     }</span>
+<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a>   }</span>
+<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a>   </span>
+<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a>   return beta_samples;</span>
+<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a> }</span></code></pre></div>
+<ul>
+<li><code>summarize_posterior()</code>：对后验样本进行汇总，计算后验均值和相应的信用区间（Credible
+Interval）。</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>summarize_posterior <span class="ot">&lt;-</span> <span class="cf">function</span>(y, X, beta_init, sigma2, tau2, n_iter, proposal_sd, <span class="at">cred_mass=</span><span class="fl">0.95</span>) {</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="co"># Perform MCMC sampling</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  beta_samples <span class="ot">&lt;-</span> <span class="fu">mcmc_linreg</span>(y, X, beta_init, sigma2, tau2, n_iter, proposal_sd)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  </span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="co"># Summarize posterior samples</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(beta_samples)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  summary_list <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, p)</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>p) {</span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>    mean_val <span class="ot">&lt;-</span> <span class="fu">mean</span>(beta_samples[,j])</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>    ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(beta_samples[,j], <span class="at">probs =</span> <span class="fu">c</span>((<span class="dv">1</span><span class="sc">-</span>cred_mass)<span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="sc">-</span>cred_mass)<span class="sc">/</span><span class="dv">2</span>))</span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>    summary_list[[j]] <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mean=</span>mean_val, <span class="at">CI=</span>ci)</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>  }</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  summary_list</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>}</span></code></pre></div>
+<div id="原理概述" class="section level2">
+<h2>原理概述</h2>
+<p>考虑线性回归模型：<br />
+<span class="math display">\[
+y = X\beta + \varepsilon,\quad \varepsilon \sim N(0, \sigma^2 I).
+\]</span></p>
+<p>在贝叶斯设定下，我们对参数 <span class="math inline">\(\beta\)</span>
+指定正态先验：<br />
+<span class="math display">\[
+\beta \sim N(0, \tau^2 I).
+\]</span></p>
+<p>由此得到的后验分布满足：<br />
+<span class="math display">\[
+p(\beta | y, X) \propto p(y|X,\beta) p(\beta).
+\]</span></p>
+<ul>
+<li><p>似然为：<br />
+<span class="math display">\[
+p(y | X,\beta) = (2\pi\sigma^2)^{-\frac{n}{2}} \exp\left(-\frac{(y -
+X\beta)^\top(y - X\beta)}{2\sigma^2}\right).
+\]</span></p></li>
+<li><p>先验为：<br />
+<span class="math display">\[
+p(\beta) = (2\pi\tau^2)^{-\frac{p}{2}}
+\exp\left(-\frac{\beta^\top\beta}{2\tau^2}\right).
+\]</span></p></li>
+</ul>
+<p>由于后验分布的显式形式在大多数情况下较为复杂，<code>mcmc_linreg()</code>
+使用 M-H 算法对后验进行抽样，从而对 <span class="math inline">\(\beta\)</span> 的后验特征进行评估。</p>
+</div>
+<div id="使用示例" class="section level2">
+<h2>使用示例</h2>
+<p>下面的示例展示如何使用 <code>SA24204126</code> 包来完成如下步骤：</p>
+<ol style="list-style-type: decimal">
+<li>使用 <code>simulate_data()</code> 模拟线性回归数据。</li>
+<li>使用 <code>mcmc_linreg()</code> 对后验分布进行 MCMC 抽样。</li>
+<li>使用 <code>summarize_posterior()</code>
+对后验样本进行汇总和分析。</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(SA24204126)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># 示例代码（eval=TRUE以实际执行并展示结果）</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;SA24204126&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">&quot;Package &#39;SA24204126&#39; is required but is not installed. Please install it first.&quot;</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>}</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="fu">library</span>(SA24204126)</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co"># 设置随机种子以便结果可重复</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co"># 使用 simulate_data() 生成模拟数据</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>data_sim <span class="ot">&lt;-</span> <span class="fu">simulate_data</span>(<span class="at">n=</span><span class="dv">200</span>, <span class="at">beta=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">sigma=</span><span class="dv">1</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>X <span class="ot">&lt;-</span> data_sim<span class="sc">$</span>X</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>y <span class="ot">&lt;-</span> data_sim<span class="sc">$</span>y</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co"># 设置 MCMC 参数</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>n_iter <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>sigma2 <span class="ot">&lt;-</span> data_sim<span class="sc">$</span>sigma<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>tau2 <span class="ot">&lt;-</span> <span class="dv">10</span>      <span class="co"># 先验方差</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>beta_init <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">ncol</span>(X))</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a>proposal_sd <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co"># 使用 mcmc_linreg() 抽取后验样本并 summarize_posterior() 进行结果汇总</span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>res_summary <span class="ot">&lt;-</span> <span class="fu">summarize_posterior</span>(y, X, beta_init, sigma2, tau2, n_iter, proposal_sd)</span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a>res_summary</span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="co">#&gt; [[1]]$mean</span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="co">#&gt; [1] 1.039468</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="co">#&gt; [[1]]$CI</span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="co">#&gt;      2.5%     97.5% </span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="co">#&gt; 0.8927121 1.1842532 </span></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a><span class="co">#&gt; [[2]]$mean</span></span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a><span class="co">#&gt; [1] 1.9567</span></span>
+<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a><span class="co">#&gt; [[2]]$CI</span></span>
+<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a><span class="co">#&gt;     2.5%    97.5% </span></span>
+<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a><span class="co">#&gt; 1.805624 2.119271</span></span></code></pre></div>
+<p>上述代码运行完成后，<code>res_summary</code>
+会返回每个系数的后验均值以及相应的 95% 可信区间。假定真实参数为 <span class="math inline">\(\beta = (1,2)\)</span>，则估计应接近该值。</p>
+<div id="汇总结果表格展示" class="section level3">
+<h3>汇总结果表格展示</h3>
+<p>假设 <code>res_summary</code> 结果类似下面的结构（这里为示例）：</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># 从res_summary中提取信息</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>mean_val <span class="ot">&lt;-</span> res_summary[[<span class="dv">1</span>]]<span class="sc">$</span>mean</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>ci_lower <span class="ot">&lt;-</span> res_summary[[<span class="dv">1</span>]]<span class="sc">$</span>CI[<span class="dv">1</span>]</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>ci_upper <span class="ot">&lt;-</span> res_summary[[<span class="dv">1</span>]]<span class="sc">$</span>CI[<span class="dv">2</span>]</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co"># 创建数据框</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>res_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>  <span class="at">Parameter =</span> <span class="st">&quot;Beta_1&quot;</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>  <span class="at">Mean =</span> mean_val,</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>  <span class="at">CI_Lower =</span> ci_lower,</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>  <span class="at">CI_Upper =</span> ci_upper</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>)</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co"># 使用knitr::kable展示表格</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(res_df, <span class="at">caption =</span> <span class="st">&quot;后验结果汇总表&quot;</span>)</span></code></pre></div>
+<table>
+<caption>后验结果汇总表</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Parameter</th>
+<th align="right">Mean</th>
+<th align="right">CI_Lower</th>
+<th align="right">CI_Upper</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2.5%</td>
+<td align="left">Beta_1</td>
+<td align="right">1.039468</td>
+<td align="right">0.8927121</td>
+<td align="right">1.184253</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="后验分布可视化" class="section level3">
+<h3>后验分布可视化</h3>
+<p>下面示例演示如何从 <code>mcmc_linreg()</code>
+获得的样本中绘制直方图，并用红色虚线标识真实参数值。要进行此操作，我们需要从底层访问
+MCMC 样本。由于 <code>summarize_posterior()</code> 内部使用了
+<code>mcmc_linreg()</code>，我们可以单独调用 <code>mcmc_linreg()</code>
+来获取原始样本。</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># 获取后验样本矩阵（n_iter x p）</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>beta_samples <span class="ot">&lt;-</span> <span class="fu">mcmc_linreg</span>(y, X, beta_init, sigma2, tau2, n_iter, proposal_sd)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="fu">hist</span>(beta_samples[,<span class="dv">1</span>], <span class="at">main=</span><span class="st">&quot;Posterior of Beta_1&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Value&quot;</span>, </span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>     <span class="at">col=</span><span class="st">&quot;lightblue&quot;</span>, <span class="at">border=</span><span class="st">&quot;white&quot;</span>, <span class="at">freq=</span><span class="cn">FALSE</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>)  <span class="co"># 真值1</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="fu">hist</span>(beta_samples[,<span class="dv">2</span>], <span class="at">main=</span><span class="st">&quot;Posterior of Beta_2&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Value&quot;</span>, </span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>     <span class="at">col=</span><span class="st">&quot;lightblue&quot;</span>, <span class="at">border=</span><span class="st">&quot;white&quot;</span>, <span class="at">freq=</span><span class="cn">FALSE</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>)  <span class="co"># 真值2</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>通过图形可观察到后验分布围绕真实参数值（1 和
+2）波动，并呈现较小的偏差。随着 MCMC
+迭代数的增加，后验分布估计会更加稳定和精确。</p>
+</div>
+</div>
+<div id="小结" class="section level2">
+<h2>小结</h2>
+<p>本 Vignette 演示了如何使用 <code>SA24204126</code>
+包对线性回归模型进行贝叶斯分析的基本流程：</p>
+<ul>
+<li>使用 <code>simulate_data()</code> 生成数据。</li>
+<li>使用 <code>mcmc_linreg()</code> 获得参数的后验抽样。</li>
+<li>使用 <code>summarize_posterior()</code>
+对后验结果进行汇总和分析。</li>
+</ul>
+<p>通过这些步骤，用户可以轻松获得参数的后验分布特征，包括后验均值、可信区间和直方图可视化，从而更好地理解和应用贝叶斯线性回归模型。</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
